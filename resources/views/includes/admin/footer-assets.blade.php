@@ -22,7 +22,6 @@
     let _url = "{{ request()->url() }}";
     let _toast = {!! Session::get('toast') ? json_encode(Session::get('toast')) : 'null' !!};
 </script>
-<script src="{{ asset('assets/user/js/notifications.js?v=') . config('version.js_user') }}"></script>
 <!-- user module main js -->
 <script src="{{ asset('assets/user/js/main.js?v=') . config('version.js_user') }}"></script>
 <script>

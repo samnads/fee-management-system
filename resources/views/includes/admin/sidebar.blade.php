@@ -9,13 +9,13 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ url('admin') }}">
+            <a class="nav-link collapsed" href="{{ route('students') }}">
                 <i class="bi bi-grid"></i>
                 <span>Students</span>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ url('admin') }}">
+            <a class="nav-link collapsed" href="{{ route('courses') }}">
                 <i class="bi bi-grid"></i>
                 <span>Courses</span>
             </a>
