@@ -62,7 +62,7 @@
                                                     <button type="button" class="btn btn-outline-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Assign Course" data-action="assign-course" data-id="{{$student->id}}"><i class="bi bi-plus"></i></button>
                                                     <button type="button" class="btn btn-outline-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Enable / Disable">
                                                         <div class="form-check form-switch">
-                                                            <input class="form-check-input" type="checkbox" role="switch"
+                                                            <input class="form-check-input" type="checkbox" role="switch" name="toggle-user" data-id="{{$student->id}}"
                                                                 id="flexSwitchCheckDefault" checked>
                                                             <label class="form-check-label"
                                                                 for="flexSwitchCheckDefault"></label>

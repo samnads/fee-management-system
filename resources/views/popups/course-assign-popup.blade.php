@@ -6,6 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form class="form-row g-3" id="assign-course">
+                <input type="hidden" name="student_id">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-6">
@@ -20,7 +21,7 @@
                     <div class="row">
                         <div class="col-12">
                             <label class="form-label">Courses</label>
-                            <select name="courses[]" class="form-select" placeholder="-- Select Courses --"></select>
+                            <select name="courses[]" class="form-select" placeholder="-- Select Courses --" multiple></select>
                         </div>
                     </div>
                 </div>
