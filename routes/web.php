@@ -13,6 +13,7 @@ Route::middleware([])->group(function () {
     Route::post('/students', [StudentController::class, 'save_student']);
     Route::post('/students/assign', [StudentController::class, 'assign_course']);
     Route::get('/students/{id}', [StudentController::class, 'student_data']);
+    Route::post('/students/toggle', [StudentController::class, 'toggle']);
     Route::get('/courses', [CourseController::class, 'index'])->name('courses');
 });
 Route::post('/login', [AuthController::class, 'login']);

@@ -13,7 +13,7 @@ class StudentController extends Controller
     public function index(Request $request)
     {
         $data['page'] = $request->page ?: 1;
-        $data['students'] = Student::orderByDesc('id')->with('courses')->paginate(10);
+        $data['students'] = Student::orderByDesc('id')->with('courses')->withTrashed()->paginate(10);
         return view('students', $data);
     }
     public function save_student(Request $request)
@@ -54,12 +54,40 @@ class StudentController extends Controller
     }
     public function student_data(Request $request, $id)
     {
-        $student = Student::findOrFail($id);
-        //$student_courses = StudentCourse::where('student_id',$id)->get();
         $response['status'] = true;
-        $response['student'] = $student;
-        $response['all_courses'] = Course::get();
-        $response['student_courses'] = StudentCourse::where([['student_id', '=', $id]])->get();
+        $student = Student::find($id);
+        if (!$student) {
+            $response = [
+                'status' => false,
+                'error' => [
+                    'type' => 'error',
+                    'title' => 'Not Active !',
+                    'content' => 'Selected user not active !'
+                ],
+            ];
+        } else {
+            //$student_courses = StudentCourse::where('student_id',$id)->get();
+            $response['student'] = $student;
+            $response['all_courses'] = Course::get();
+            $response['student_courses'] = StudentCourse::where([['student_id', '=', $id]])->get();
+        }
+        return response()->json($response, 200, [], JSON_PRETTY_PRINT);
+    }
+    public function toggle(Request $request)
+    {
+        if ($request->enable === '0') {
+            Student::withTrashed()->where('id', $request->id)->delete();
+        } else {
+            Student::withTrashed()->where('id', $request->id)->restore();
+        }
+        $response = [
+            'status' => true,
+            'message' => [
+                'type' => 'success',
+                'title' => $request->enable === 0 ? 'Disabled !' : 'Enabled !',
+                'content' => 'Student ' . ($request->enable === 0 ? 'disabled' : 'enabled') . ' successfully.'
+            ]
+        ];
         return response()->json($response, 200, [], JSON_PRETTY_PRINT);
     }
     public function assign_course(Request $request)

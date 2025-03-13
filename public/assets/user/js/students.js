@@ -167,7 +167,7 @@ $(document).ready(function () {
         }
     });
 });
-$('[name="toggle-user"]').change(function () {
+$('[name="toggle_user"]').change(function () {
     let enable = $(this).is(':checked') ? 1 : 0;
     $.ajax({
         type: 'POST',

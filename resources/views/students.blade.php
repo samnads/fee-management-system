@@ -39,7 +39,7 @@
                                         <th width="1%">Actions</th>
                                     </tr>
                                     @foreach ($students as $key => $student)
-                                        <tr>
+                                        <tr style="background-color: {{$student->deleted_at == null ? 'checked' : 'red !important'}};">
                                             <td>{{ ($page - 1) * 10 + $key + 1 }}</td>
                                             <td>{{ $student->name }}</td>
                                             <td>
@@ -62,10 +62,10 @@
                                                     <button type="button" class="btn btn-outline-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Assign Course" data-action="assign-course" data-id="{{$student->id}}"><i class="bi bi-plus"></i></button>
                                                     <button type="button" class="btn btn-outline-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Enable / Disable">
                                                         <div class="form-check form-switch">
-                                                            <input class="form-check-input" type="checkbox" role="switch" name="toggle-user" data-id="{{$student->id}}"
-                                                                id="flexSwitchCheckDefault" checked>
+                                                            <input class="form-check-input" type="checkbox" role="switch" name="toggle_user" data-id="{{$student->id}}"
+                                                                id="toggle_{{$student->id}}" {{$student->deleted_at == null ? 'checked' : ''}}>
                                                             <label class="form-check-label"
-                                                                for="flexSwitchCheckDefault"></label>
+                                                                for="toggle_{{$student->id}}"></label>
                                                         </div>
                                                     </button>
                                                 </div>
