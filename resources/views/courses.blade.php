@@ -12,67 +12,14 @@
                 </ol>
             </nav>
         </div><!-- End Page Title -->
-        <div class="pagetitle-right">
-            <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                    <a href="#" type="button" data-action="new-customer" class="btn btn-secondary"
-                        data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="New Booking"><i
-                            class="bi bi-plus"></i></a>
-            </div>
-        </div>
     </div>
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header filter">
-                        <div class="row">
-                            <div class="col">
-                                <label class="small">Booked On</label>
-                                <div class="input-group input-group-sm">
-                                    <span class="input-group-text"><i class="ri-filter-2-line"></i></span>
-                                    <input class="form-control form-control-sm" name="filter[created_at]" autocomplete="off"
-                                        placeholder="-- Select Date --">
-                                </div>
-                            </div>
-                            <div class="col">
-                                <label class="small">Deal Status</label>
-                                <div class="input-group input-group-sm">
-                                    <span class="input-group-text"><i class="ri-filter-2-line"></i></span>
-                                    <select class="form-select form-select-sm" name="filter[deal_status]"
-                                        autocomplete="off">
-                                        <option value="">-- Select All --</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <label class="small">Request Status</label>
-                                <div class="input-group input-group-sm">
-                                    <span class="input-group-text"><i class="ri-filter-2-line"></i></span>
-                                    <select class="form-select form-select-sm" name="filter[request_status]"
-                                        autocomplete="off">
-                                        <option value="">-- Select All --</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <label class="small">Payment Mode</label>
-                                <div class="input-group input-group-sm">
-                                    <span class="input-group-text"><i class="ri-filter-2-line"></i></span>
-                                    <select class="form-select form-select-sm" name="filter[payment_mode]"
-                                        autocomplete="off">
-                                        <option value="" selected>-- Select All --</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <label class="small">Download</label>
-                                <a href="#" class="form-control btn btn-sm btn-secondary"><i
-                                        class="ri-file-excel-2-fill"></i></a>
-                            </div>
-                            <div class="col">
-                                <label class="small">Clear</label>
-                                <button class="form-control btn btn-sm btn-secondary" data-action="clear-filter"><i
-                                        class="ri-filter-off-fill"></i></button>
+                        <div class="d-flex flex-row-reverse">
+                            <div class="p-2"><button class="form-control btn btn-sm btn-success" data-action="new-student"><i class="bi bi-book"></i>&nbsp;New Course</button>
                             </div>
                         </div>
                     </div>
@@ -106,10 +53,13 @@
             </div>
         </div>
     </section>
+    @include('popups.course-new-popup')
+    @include('popups.course-edit-popup')
 @endsection
 @push('head-assets')
     <link rel="stylesheet" href="{{ asset('assets/user/css/flatpickr.min.css?v=') . config('version.css_user') }}">
 @endpush
 @push('footer-assets')
     <script src="{{ asset('assets/user/js/flatpickr.js?v=') . config('version.js_user') }}"></script>
+    <script src="{{ asset('assets/user/js/courses.js?v=') . config('version.js_user') }}"></script>
 @endpush

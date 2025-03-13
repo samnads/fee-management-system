@@ -15,6 +15,7 @@ Route::middleware([])->group(function () {
     Route::get('/students/{id}', [StudentController::class, 'student_data']);
     Route::post('/students/toggle', [StudentController::class, 'toggle']);
     Route::get('/courses', [CourseController::class, 'index'])->name('courses');
+    Route::post('/courses', [CourseController::class, 'save_course']);
 });
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

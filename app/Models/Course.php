@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Course extends Model
 {
     use HasFactory, SoftDeletes;
+    protected $fillable = ['name', 'duration', 'fee_per_month'];
     public function students()
     {
         return $this->belongsToMany(Student::class, 'student_courses');
