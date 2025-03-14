@@ -3,6 +3,8 @@
 Please follow these steps to setup project on localhost  
 <span style="color:red">Please note that **.env** file is also included</span>
 
+PHP Version : 8.2.26<br>
+
 - git clone https://github.com/samnads/fee-management-system.git
 - change database credentials in **.env** file
 - composer install
