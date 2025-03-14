@@ -1,13 +1,15 @@
 ## Installation & Setup
   
 Please follow these steps to setup project on localhost  
+<span style="color:red">Please note that **.env** file is also included</span>
+
 - git clone https://github.com/samnads/fee-management-system.git
+- change database credentials in **.env** file
 - composer install
 - php artisan migrate
 - php artisan db:seed
 - php artisan serve
 
-<span style="color:red">Please note that **.env** file is also included</span>
 
 <u>Admin Login</u><br>
 Username - **admin@example.com**<br>
