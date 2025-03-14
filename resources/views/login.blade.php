@@ -18,7 +18,7 @@
                                 <div class="card-body">
 
                                     <div class="d-flex justify-content-center py-4">
-                                        <a href="#" class="logo d-flex align-items-center w-auto">
+                                        <a href="{{route('login_view')}}" class="logo d-flex align-items-center w-auto">
                                             <h2>Admin Login</h2>
                                             <span class="d-none d-lg-block"></span>
                                         </a>

@@ -16,7 +16,7 @@
                                         <i class="bi bi-bar-chart"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6 class="sales-amount"><span>USD</span> 0.00</h6>
+                                        <h6 class="sales-amount">{{ $payments->amount_paid }}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -27,13 +27,14 @@
                     <div class="col-xxl-4 col-md-6">
                         <div class="card info-card revenue-card widget" id="revenue">
                             <div class="card-body">
-                                <h5 class="card-title">Revenue <span>| </span><span class="filter_text">Today</span></h5>
+                                <h5 class="card-title">Pending Fee</h5>
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                         <i class="bi bi-cash-coin"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6 class="sales-amount"><span>USD</span> 0.00</h6>
+                                        <h6 class="sales-amount">{{ $student_courses->total_fee - $payments->amount_paid }}
+                                        </h6>
                                     </div>
                                 </div>
                             </div>
@@ -44,16 +45,13 @@
                     <div class="col-xxl-4 col-xl-12">
                         <div class="card info-card customers-card widget" id="bookings">
                             <div class="card-body">
-                                <h5 class="card-title"><a href="{{ url('booking/list') }}">Bookings</a> <span>| </span><span
-                                        class="filter_text">Today</span></h5>
+                                <h5 class="card-title">Enrolled Students</h5>
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                         <i class="bi bi-clock-history"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <a href="{{ url('booking/list') }}">
-                                            <h6 class="bookings_count">0</h6>
-                                        </a>
+                                        <h6 class="bookings_count">{{ $enrolled->count }}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -68,10 +66,10 @@
                     <div class="col-md-12">
                         <div class="card widget" id="report-chart">
                             <div class="card-body">
-                                <h5 class="card-title">Reports <span>| </span><span class="filter_text">Last 7 Days</span>
+                                <h5 class="card-title">Reports
                                 </h5>
                                 <!-- Line Chart -->
-                                <div id="reportsChart" class="chart"></div>
+                                <canvas id="myChart"></canvas>
                                 <!-- End Line Chart -->
                             </div>
                         </div>
@@ -86,4 +84,30 @@
 @endpush
 @push('footer-assets')
     <script src="{{ asset('assets/user/js/flatpickr.js?v=') . config('version.js_user') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('myChart');
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Revenue', 'Pending Fee', 'Enrolled Students'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [{{ $payments->amount_paid }},
+                        {{ $student_courses->total_fee - $payments->amount_paid }},
+                        {{ $enrolled->count }}
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 @endpush

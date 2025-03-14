@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
+use App\Models\StudentCourse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
@@ -11,10 +13,17 @@ class AuthController extends Controller
     public function login_or_home(Request $request)
     {
         if (Auth::check()) {
-            return view('dashboard', []);
+            $data['payments'] = Payment::selectRaw("SUM(amount_paid) as amount_paid")->first();
+            $data['student_courses'] = StudentCourse::selectRaw("SUM(total_fee) as total_fee")->first();
+            $data['enrolled'] = StudentCourse::selectRaw("COUNT(DISTINCT(student_id)) as count")->first();
+            return view('dashboard', $data);
         } else {
             return view('login', []);
         }
+    }
+    public function login_view(Request $request)
+    {
+        return view('login', []);
     }
     public function logout(Request $request)
     {

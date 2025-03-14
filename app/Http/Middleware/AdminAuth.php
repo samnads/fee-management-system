@@ -19,6 +19,6 @@ class AdminAuth
         if (Auth::check()) {
             return $next($request);
         }
-        return route('login_or_home');
+        return redirect('/login');
     }
 }

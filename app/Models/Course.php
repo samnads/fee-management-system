@@ -10,6 +10,7 @@ class Course extends Model
 {
     use HasFactory, SoftDeletes;
     protected $fillable = ['name', 'duration', 'fee_per_month'];
+    protected $hidden = ['created_at', 'updated_at', 'deleted_at'];
     public function students()
     {
         return $this->belongsToMany(Student::class, 'student_courses');
