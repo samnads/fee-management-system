@@ -9,8 +9,8 @@ Please follow these steps to setup project on localhost
 
 <span style="color:red">Please note that **.env** file is also included</span>
 
-Admin Login
-Username - **admin@example.com**
+Admin Login<br>
+Username - **admin@example.com**<br>
 Password - **12345**
 
 ## Features Used
