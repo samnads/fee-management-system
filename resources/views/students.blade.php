@@ -37,7 +37,7 @@
                                         <th>Fee / Month</th>
                                         <th>Duration</th>
                                         <th>Total Fee</th>
-                                        <th>Paid</th>
+                                        <th>Total Paid</th>
                                         <th width="1%">Actions</th>
                                     </tr>
                                     @foreach ($students as $key => $student)
