@@ -14,4 +14,8 @@ class Student extends Model
     {
         return $this->belongsToMany(Course::class, 'student_courses')->whereNull('student_courses.deleted_at');
     }
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

@@ -13,7 +13,7 @@ class StudentController extends Controller
     public function index(Request $request)
     {
         $data['page'] = $request->page ?: 1;
-        $data['students'] = Student::orderByDesc('students.id')->with('courses')->withTrashed()->paginate(10);
+        $data['students'] = Student::orderByDesc('students.id')->with('courses')->withSum('payments', 'amount_paid')->withTrashed()->paginate(10);
         return view('students', $data);
     }
     public function save_student(Request $request)

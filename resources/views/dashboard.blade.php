@@ -16,7 +16,7 @@
                                         <i class="bi bi-bar-chart"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6 class="sales-amount">{{ $payments->amount_paid }}</h6>
+                                        <h6 class="sales-amount">{{ $payments->amount_paid ?: 0 }}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -94,7 +94,7 @@
                 labels: ['Revenue', 'Pending Fee', 'Enrolled Students'],
                 datasets: [{
                     label: '# of Votes',
-                    data: [{{ $payments->amount_paid }},
+                    data: [{{ $payments->amount_paid ?: 0 }},
                         {{ $student_courses->total_fee - $payments->amount_paid }},
                         {{ $enrolled->count }}
                     ],

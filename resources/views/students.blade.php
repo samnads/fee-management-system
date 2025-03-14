@@ -35,7 +35,9 @@
                                         <th>Name</th>
                                         <th>Courses</th>
                                         <th>Fee / Month</th>
+                                        <th>Duration</th>
                                         <th>Total Fee</th>
+                                        <th>Paid</th>
                                         <th width="1%">Actions</th>
                                     </tr>
                                     @foreach ($students as $key => $student)
@@ -54,9 +56,15 @@
                                             </td>
                                             <td>
                                                 @foreach ($student->courses as $key => $course)
-                                                    <p>{{ $course->duration * $course->fee_per_month }}</p>
+                                                    <p>{{ $course->duration }}</p>
                                                 @endforeach
                                             </td>
+                                            <td>
+                                                @foreach ($student->courses as $key => $course)
+                                                    <p>{{ $course->total_fee }}</p>
+                                                @endforeach
+                                            </td>
+                                            <td>{{$student->payments_sum_amount_paid}}</td>
                                             <td>
                                                 <div class="btn-group btn-group-sm" role="group" aria-label="Basic outlined example">
                                                     <button type="button" class="btn btn-outline-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{sizeof($student->courses) ? 'Edit' : 'Assign'}} Course" data-action="assign-course" data-id="{{$student->id}}"><i class="bi bi-{{sizeof($student->courses) ? 'pencil' : 'plus'}}"></i></button>
