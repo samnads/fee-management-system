@@ -1,10 +1,5 @@
 let new_student_form = $('form[id="new-student"]');
-let edit_course_form = $('form[id="edit-course"]');
 let new_student_form_modal = new bootstrap.Modal(document.getElementById('new-student-modal'), {
-    backdrop: 'static',
-    keyboard: true
-});
-let edit_course_form_modal = new bootstrap.Modal(document.getElementById('edit-course-modal'), {
     backdrop: 'static',
     keyboard: true
 });
@@ -12,24 +7,82 @@ $('[data-action="new-student"]').click(function () {
     new_student_form_modal.show();
 });
 document.getElementById('new-student-modal').addEventListener('show.bs.modal', event => {
+    student_dropdown.clear();
+    date_of_payment.clear();
     new_student_form_validator.resetForm();
     new_student_form.trigger('reset');
-    date_of_birth.clear();
+});
+let date_of_payment = $('[name="date_of_payment"]').flatpickr({
+    altInput: true,
+    altFormat: "d/m/Y",
+    dateFormat: "Y-m-d",
+    maxDate: "today"
+});
+let student_dropdown = new TomSelect('#new-student [name="student_id"]', {
+    hideSelected: true,
+    create: false,
+    allowEmptyOption: true,
+    valueField: 'id',
+    labelField: 'name',
+    searchField: 'name',
+    plugins: ['remove_button'],
+    onChange: function (value) {
+        courses_dropdown.clear();
+        courses_dropdown.clearOptions();
+        if (value) {
+            $.ajax({
+                type: 'GET',
+                url: _base_url + "students/" + value,
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status == true) {
+                        courses_dropdown.addOptions(response.student_courses);
+                        if (response.student_courses.length == 0) {
+                            toast('No Courses !', 'No courses assigned for this student !', 'warning');
+                        }
+                    } else {
+                        toastStatusFalse(response);
+                    }
+                },
+                error: function (response) {
+                    ajaxError(response);
+                },
+            });
+        }
+    },
+});
+let courses_dropdown = new TomSelect('#new-student [name="course_id"]', {
+    hideSelected: true,
+    create: false,
+    allowEmptyOption: true,
+    valueField: 'id',
+    labelField: 'name',
+    searchField: 'name',
+    sortField: {
+        field: "id",
+        direction: "desc"
+    },
+    plugins: ['remove_button'],
+    onChange: function (value) {
+    },
 });
 $(document).ready(function () {
     new_student_form_validator = new_student_form.validate({
         focusInvalid: true,
         ignore: [],
         rules: {
-            "name": {
+            "student_id": {
                 required: true,
             },
-            "duration": {
+            "course_id": {
                 required: true,
             },
-            "fee_per_month": {
+            "amount": {
                 required: true,
             },
+            "date_of_payment": {
+                required: true
+            }
         },
         messages: {},
         errorPlacement: function (error, element) {
@@ -43,65 +96,12 @@ $(document).ready(function () {
         submitHandler: function (form) {
             $.ajax({
                 type: 'POST',
-                url: _base_url + "courses",
+                url: _base_url + "payments",
                 dataType: 'json',
                 data: new_student_form.serialize(),
                 success: function (response) {
                     if (response.status == true) {
                         new_student_form_modal.hide();
-                        Swal.fire({
-                            title: response.message.title,
-                            text: response.message.content,
-                            icon: response.message.type,
-                            confirmButtonText: "OK",
-                            allowOutsideClick: false
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                location.reload();
-                            }
-                        });
-                    } else {
-                        toastStatusFalse(response);
-                    }
-                },
-                error: function (response) {
-                    ajaxError(response);
-                },
-            });
-        }
-    });
-    edit_course_form_validator = edit_course_form.validate({
-        focusInvalid: true,
-        ignore: [],
-        rules: {
-            "name": {
-                required: true,
-            },
-            "duration": {
-                required: true,
-            },
-            "fee_per_month": {
-                required: true,
-            }
-        },
-        messages: {},
-        errorPlacement: function (error, element) {
-            if (element.hasClass("flatpickr-input") || element.hasClass("tomselected")) {
-                $(element).parent().append(error);
-            }
-            else {
-                error.insertAfter(element);
-            }
-        },
-        submitHandler: function (form) {
-            $.ajax({
-                type: 'PUT',
-                url: _base_url + "courses",
-                dataType: 'json',
-                data: edit_course_form.serialize(),
-                success: function (response) {
-                    if (response.status == true) {
-                        edit_course_form_modal.hide();
                         Swal.fire({
                             title: response.message.title,
                             text: response.message.content,
@@ -144,27 +144,6 @@ $('[name="toggle_course"]').change(function () {
                         location.reload();
                     }
                 });
-            } else {
-                toastStatusFalse(response);
-            }
-        },
-        error: function (response) {
-            ajaxError(response);
-        },
-    });
-});
-$('[data-action="edit-course"]').click(function () {
-    $.ajax({
-        type: 'GET',
-        url: _base_url + "courses/" + $(this).attr('data-id'),
-        dataType: 'json',
-        success: function (response) {
-            if (response.status == true) {
-                $('[name="id"]', edit_course_form).val(response.course.id);
-                $('[name="name"]', edit_course_form).val(response.course.name);
-                $('[name="duration"]', edit_course_form).val(response.course.duration);
-                $('[name="fee_per_month"]', edit_course_form).val(response.course.fee_per_month);
-                edit_course_form_modal.show();
             } else {
                 toastStatusFalse(response);
             }

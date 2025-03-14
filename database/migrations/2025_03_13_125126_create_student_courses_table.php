@@ -17,6 +17,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('student_id')->constrained();
             $table->foreignId('course_id')->constrained();
+            $table->integer('duration');
+            $table->integer('fee_per_month');
+            $table->integer('total_fee');
             $table->timestamps();
             $table->softDeletes();
         });

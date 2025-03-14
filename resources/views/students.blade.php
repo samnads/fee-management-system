@@ -59,7 +59,7 @@
                                             </td>
                                             <td>
                                                 <div class="btn-group btn-group-sm" role="group" aria-label="Basic outlined example">
-                                                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Assign Course" data-action="assign-course" data-id="{{$student->id}}"><i class="bi bi-plus"></i></button>
+                                                    <button type="button" class="btn btn-outline-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="{{sizeof($student->courses) ? 'Edit' : 'Assign'}} Course" data-action="assign-course" data-id="{{$student->id}}"><i class="bi bi-{{sizeof($student->courses) ? 'pencil' : 'plus'}}"></i></button>
                                                     <button type="button" class="btn btn-outline-dark" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Enable / Disable">
                                                         <div class="form-check form-switch">
                                                             <input class="form-check-input" type="checkbox" role="switch" name="toggle_user" data-id="{{$student->id}}"

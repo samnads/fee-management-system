@@ -1,65 +1,84 @@
 @extends('layouts.admin', [])
 @section('title', 'Dashboard')
 @section('content')
-    <div class="pagetitle">
-        <h1>Booking Report</h1>
-    </div><!-- End Page Title -->
-    <section class="section">
-        <form class="g-3" id="new-booking" enctype="multipart/form-data">
-            <div class="row g-4">
-                <div class="col-lg-12" id="customer-top">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Filter</h5>
-                            <!-- Horizontal Form -->
-                            <div class="row g-3">
-                                <div class="col-md-2 col-sm-4">
-                                    <label class="form-label">Date
-                                        <rf />
-                                    </label>
-                                    <input type="text" class="form-control pickup_date" name="date" autocomplete="off"
-                                        value="{{ date('Y-m-d') }}">
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <label class="form-label">Show Time
-                                        <rf />
-                                    </label>
-                                    <select class="form-select" name="time">
-                                        <option value="10:00:00" selected>10:00 AM</option>
-                                        <option value="03:00:00">03:00 PM</option>
-                                        <option value="09:00:00">09:00 PM</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row mt-4">
-                                <div class="col-12 fs-4">
-                                Seats Available : <span id="available" class="text-success fw-bold">0</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="ro">
-                    <div class="col-lg-12">
-                        <div class="card pt-2">
+    <section class="section dashboard">
+        <div class="row">
+            <!-- Left side columns -->
+            <div class="col-lg-12">
+                <div class="row light-colors">
+                    <!-- Sales Card -->
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card sales-card widget" id="total-sales">
                             <div class="card-body">
-                                <table id="customer-list-datatable"
-                                    class="datatable table table-sm table-hover table-striped" style="width:100%">
-                                    <thead>
-                                        <tr>
-                                            <th>Sl. No.</th>
-                                            <th>User</th>
-                                            <th>No. of Seats Booked</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="report">
-                                    </tbody>
-                                </table>
+                                <h5 class="card-title">Revenue</h5>
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-bar-chart"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6 class="sales-amount"><span>USD</span> 0.00</h6>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <!-- End Sales Card -->
+                    <!-- Revenue Card -->
+                    <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card revenue-card widget" id="revenue">
+                            <div class="card-body">
+                                <h5 class="card-title">Revenue <span>| </span><span class="filter_text">Today</span></h5>
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-cash-coin"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6 class="sales-amount"><span>USD</span> 0.00</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Revenue Card -->
+                    <!-- Customers Card -->
+                    <div class="col-xxl-4 col-xl-12">
+                        <div class="card info-card customers-card widget" id="bookings">
+                            <div class="card-body">
+                                <h5 class="card-title"><a href="{{ url('booking/list') }}">Bookings</a> <span>| </span><span
+                                        class="filter_text">Today</span></h5>
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-clock-history"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <a href="{{ url('booking/list') }}">
+                                            <h6 class="bookings_count">0</h6>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Customers Card -->
                 </div>
-        </form>
+            </div>
+            <div class="col-lg-12">
+                <div class="row">
+                    <!-- Reports -->
+                    <div class="col-md-12">
+                        <div class="card widget" id="report-chart">
+                            <div class="card-body">
+                                <h5 class="card-title">Reports <span>| </span><span class="filter_text">Last 7 Days</span>
+                                </h5>
+                                <!-- Line Chart -->
+                                <div id="reportsChart" class="chart"></div>
+                                <!-- End Line Chart -->
+                            </div>
+                        </div>
+                    </div><!-- End Reports -->
+                </div>
+            </div><!-- End Left side columns -->
+        </div>
     </section>
 @endsection
 @push('head-assets')
@@ -67,5 +86,4 @@
 @endpush
 @push('footer-assets')
     <script src="{{ asset('assets/user/js/flatpickr.js?v=') . config('version.js_user') }}"></script>
-    <script src="{{ asset('assets/user/js/admin.home.js?v=') . config('version.js_user') }}"></script>
 @endpush

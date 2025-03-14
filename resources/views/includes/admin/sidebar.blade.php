@@ -3,7 +3,7 @@
 
     <ul class="sidebar-nav" id="sidebar-nav">
         <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ url('admin') }}">
+            <a class="nav-link collapsed" href="{{ url('') }}">
                 <i class="bi bi-grid"></i>
                 <span>Dashboard</span>
             </a>
@@ -21,7 +21,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link collapsed" href="{{ url('admin') }}">
+            <a class="nav-link collapsed" href="{{ url('payments') }}">
                 <i class="bi bi-grid"></i>
                 <span>Payments</span>
             </a>

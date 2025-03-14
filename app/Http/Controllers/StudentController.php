@@ -13,7 +13,7 @@ class StudentController extends Controller
     public function index(Request $request)
     {
         $data['page'] = $request->page ?: 1;
-        $data['students'] = Student::orderByDesc('id')->with('courses')->withTrashed()->paginate(10);
+        $data['students'] = Student::orderByDesc('students.id')->with('courses')->withTrashed()->paginate(10);
         return view('students', $data);
     }
     public function save_student(Request $request)
@@ -69,7 +69,9 @@ class StudentController extends Controller
             //$student_courses = StudentCourse::where('student_id',$id)->get();
             $response['student'] = $student;
             $response['all_courses'] = Course::get();
-            $response['student_courses'] = StudentCourse::where([['student_id', '=', $id]])->get();
+            $response['student_courses'] = StudentCourse::
+            leftJoin('courses','student_courses.course_id','=','courses.id')
+            ->where([['student_id', '=', $id]])->get();
         }
         return response()->json($response, 200, [], JSON_PRETTY_PRINT);
     }
@@ -84,7 +86,7 @@ class StudentController extends Controller
             'status' => true,
             'message' => [
                 'type' => 'success',
-                'title' => $request->enable === 0 ? 'Disabled !' : 'Enabled !',
+                'title' => $request->enable === '0' ? 'Disabled !' : 'Enabled !',
                 'content' => 'Student ' . ($request->enable === 0 ? 'disabled' : 'enabled') . ' successfully.'
             ]
         ];
@@ -93,11 +95,15 @@ class StudentController extends Controller
     public function assign_course(Request $request)
     {
         foreach ($request->courses as $course_id) {
+            $course = Course::findOrFail($course_id);
             $student_course = StudentCourse::where([['student_id', '=', $request->student_id], ['course_id', '=', $course_id]])->withTrashed()->first();
             if (!$student_course) {
                 $student_course = new StudentCourse();
                 $student_course->student_id = $request->student_id;
                 $student_course->course_id = $course_id;
+                $student_course->duration = $course->duration;
+                $student_course->fee_per_month = $course->fee_per_month;
+                $student_course->total_fee = $course->duration * $course->fee_per_month;
                 $student_course->save();
             }
             $student_course_ids[] = $student_course->id;

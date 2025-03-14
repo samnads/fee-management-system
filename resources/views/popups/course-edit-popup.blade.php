@@ -1,42 +1,33 @@
-<div class="modal fade" id="edit-student-modal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+<div class="modal fade" id="edit-course-modal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-md">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">New Student <span class=""></span></h5>
+                <h5 class="modal-title">Update Course <span class=""></span></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form class="form-row g-3" id="edit-student">
+            <form class="form-row g-3" id="edit-course">
+                <input type="hidden" name="id">
                 <div class="modal-body">
-                    <div class="row">
+                     <div class="row">
                         <div class="col-6">
                             <label class="form-label">Name</label>
                             <input type="text" class="form-control" name="name" autocomplete="off">
                         </div>
                         <div class="col-6">
-                            <label class="form-label">Email</label>
-                            <input type="email" class="form-control" name="email" autocomplete="off">
+                            <label class="form-label">Duration (Months)</label>
+                            <input type="number" class="form-control" name="duration" autocomplete="off">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-6">
-                            <label class="form-label">Phone</label>
-                            <input type="text" class="form-control" name="phone" autocomplete="off">
-                        </div>
-                        <div class="col-6">
-                            <label class="form-label">Date of Birth</label>
-                            <input type="text" class="form-control" name="dob" autocomplete="off">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <label class="form-label">Address</label>
-                            <textarea type="text" class="form-control" name="address" autocomplete="off"></textarea>
+                            <label class="form-label">Fee (Per Month)</label>
+                            <input type="number" class="form-control" name="fee_per_month" autocomplete="off">
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-success">Save</button>
+                    <button type="submit" class="btn btn-success">Update</button>
                 </div>
             </form>
         </div>

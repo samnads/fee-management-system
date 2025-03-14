@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +17,11 @@ Route::middleware([])->group(function () {
     Route::post('/students/toggle', [StudentController::class, 'toggle']);
     Route::get('/courses', [CourseController::class, 'index'])->name('courses');
     Route::post('/courses', [CourseController::class, 'save_course']);
+    Route::post('/courses/toggle', [CourseController::class, 'toggle']);
+    Route::get('/courses/{id}', [CourseController::class, 'course_data']);
+    Route::put('/courses', [CourseController::class, 'update_course']);
+    Route::get('/payments', [PaymentController::class, 'index'])->name('payments');
+    Route::post('/payments', [PaymentController::class, 'save_payment']);
 });
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
